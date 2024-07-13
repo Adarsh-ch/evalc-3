@@ -11,8 +11,15 @@ const createOrderTable = async () => {
     )
   `;
   
+  // try {
+  //   await db.promise().query(query);
+  //   console.log('Order table created or already exists');
+  // } catch (err) {
+  //   console.error('Error creating order table:', err);
+  //   throw err;
+  // }
   try {
-    await db.promise().query(query);
+    await db.query(query);
     console.log('Order table created or already exists');
   } catch (err) {
     console.error('Error creating order table:', err);
