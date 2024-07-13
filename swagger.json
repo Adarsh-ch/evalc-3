@@ -1,0 +1,80 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Online Bookstore API",
+    "description": "API documentation for the Online Bookstore"
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "Orders",
+      "description": "Order management endpoints"
+    },
+    {
+      "name": "Reviews",
+      "description": "Review management endpoints"
+    },
+    {
+      "name": "Books",
+      "description": "Book management endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a new user",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login an existing user",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged in successfully"
+          }
+        }
+      }
+    }
+  }
+}
