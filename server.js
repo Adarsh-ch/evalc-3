@@ -17,6 +17,7 @@ const authRoutes = require('./routes/authRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const bookRoutes = require('./routes/bookRoutes');
+const cors = require('cors');
 const db_url  = process.env.MONGODB_URI;
 const app = express();
 
@@ -36,6 +37,7 @@ const app = express();
 // app.use(bodyParser.json());
 app.use(express.json());
 // app.use(cookieParser());
+app.use(cors({origin:process.env.FRONTEND_URL}));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
