@@ -5,6 +5,10 @@ require("dotenv").config();
 
 exports.register = async (req, res) => {
   const { username, password,role = 'customer' } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
+
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -32,7 +36,9 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
     console.log('Generated JWT token:', token);
 
-    res.cookie('token', token, { httpOnly: true });
+    // res.cookie('token', token, { httpOnly: true });
+    req.session.token = token;
+    console.log(req.session);
     res.json({ message: 'Logged in successfully' });
   } catch (error) {
     console.error('Error during login:', error);

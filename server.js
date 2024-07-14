@@ -41,8 +41,12 @@ app.use(cors({origin:process.env.FRONTEND_URL}));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI })
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  cookie: {
+    // secure: true,
+    httpOnly: true,
+  }
 }));
 app.use(morgan('dev'));
 app.get('/',(req,res)=>{

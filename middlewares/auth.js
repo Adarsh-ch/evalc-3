@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 
 exports.isAuthenticated = (req, res, next) => {
-  const token = req.cookies.token || '';
+  const token = req.session.token || '';
   if (!token) {
     return res.status(401).json({ message: 'No token, authorization denied' });
   }
