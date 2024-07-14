@@ -32,8 +32,12 @@ exports.login = async (req, res) => {
       console.log('Invalid credentials');
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-
-    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const payload = {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+    };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
     console.log('Generated JWT token:', token);
 
     // res.cookie('token', token, { httpOnly: true });
