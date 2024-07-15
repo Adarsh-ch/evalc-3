@@ -37,13 +37,19 @@ exports.login = async (req, res) => {
       username: user.username,
       role: user.role,
     };
+  
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
     console.log('Generated JWT token:', token);
+    console.log('Payload received from database:', payload);
 
     // res.cookie('token', token, { httpOnly: true });
+
     req.session.token = token;
+    req.session.username=user.username;
     console.log(req.session);
-    res.json({ message: 'Logged in successfully' });
+    
+    // console.log(req.token.payload);
+    res.json({ message: 'Logged in successfully' ,user:req.user});
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ error: 'Server error' });
