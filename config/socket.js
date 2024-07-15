@@ -1,4 +1,4 @@
-const { orderPlaced } = require('../utils/eventEmitter');
+const { orderPlaced, bookAdded } = require('../utils/eventEmitter');
 
 const initSockets = (io) => {
   io.on('connection', (socket) => {
@@ -12,7 +12,6 @@ const initSockets = (io) => {
       io.emit('orderPlaced', order);
     });
 
-    // Notify users when a new book is added
     bookAdded.on('bookAdded', (book) => {
       io.emit('bookAdded', book);
     });

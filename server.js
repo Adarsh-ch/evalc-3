@@ -6,6 +6,7 @@ const { initSockets } = require('./config/socket');
 const { initCronJobs } = require('./config/cronJobs');
 const logger = require('./config/logger');
 const eventEmitter = require('./utils/eventEmitter');
+const { orderPlaced } = require('./utils/eventEmitter');
 const requestLogger = require('./middlewares/logger');
 
 // const cookieParser = require('cookie-parser');
@@ -25,6 +26,7 @@ const authRoutes = require('./routes/authRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const bookRoutes = require('./routes/bookRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const cors = require('cors');
 const db_url  = process.env.MONGODB_URI;
@@ -75,15 +77,18 @@ app.use('/api/auth', authRoutes);
 app.use('/api/orders', isAuthenticated, orderRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/books', bookRoutes);
-
+app.use('/admin', adminRoutes);
 
 initSockets(io);
 
 initCronJobs();
 
-eventEmitter.on('orderPlaced', (order) => {
-  console.log('Order placed:', order);
+// eventEmitter.on('orderPlaced', (order) => {
+//   console.log('Order placed:', order);
  
+// });
+orderPlaced.on('orderPlaced', (order) => {
+  console.log('Order placed event received:', order);
 });
 
 const PORT = process.env.PORT || 5000;

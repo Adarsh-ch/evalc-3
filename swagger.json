@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "title": "Online Bookstore API",
-    "description": "API documentation for the Online Bookstore"
+    "description": "API documentation for the Online Bookstore with enhanced features for real-time updates, data export, and more."
   },
   "host": "localhost:5000",
   "basePath": "/api",
@@ -23,6 +23,14 @@
     {
       "name": "Books",
       "description": "Book management endpoints"
+    },
+    {
+      "name": "Admin",
+      "description": "Admin management endpoints for data export and real-time updates"
+    },
+    {
+      "name": "Notifications",
+      "description": "Real-time notifications endpoints"
     }
   ],
   "paths": {
@@ -305,6 +313,75 @@
         "responses": {
           "204": {
             "description": "Book deleted successfully"
+          }
+        }
+      }
+    },
+    "/admin/export-orders": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Export all orders as a CSV file",
+        "responses": {
+          "200": {
+            "description": "CSV file with all orders"
+          }
+        }
+      }
+    },
+    "/notifications/order-placed": {
+      "post": {
+        "tags": ["Notifications"],
+        "summary": "Trigger an orderPlaced event for testing notifications",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "formData",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "customerName",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order placed event triggered"
+          }
+        }
+      }
+    },
+    "/admin/send-promotional-emails": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Send promotional emails to users",
+        "responses": {
+          "200": {
+            "description": "Promotional emails sent"
+          }
+        }
+      }
+    },
+    "/admin/cron-jobs": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Trigger cron jobs for tasks such as sending promotional emails",
+        "responses": {
+          "200": {
+            "description": "Cron jobs triggered"
+          }
+        }
+      }
+    },
+    "/socket.io": {
+      "get": {
+        "tags": ["Notifications"],
+        "summary": "WebSocket endpoint for real-time notifications",
+        "responses": {
+          "200": {
+            "description": "WebSocket connection established"
           }
         }
       }
