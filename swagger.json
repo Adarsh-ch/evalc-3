@@ -5,7 +5,7 @@
     "title": "Online Bookstore API",
     "description": "API documentation for the Online Bookstore with enhanced features for real-time updates, data export, and more."
   },
-  "host": "localhost:5000",
+  "host": "localhost:8080",
   "basePath": "/api",
   "tags": [
     {

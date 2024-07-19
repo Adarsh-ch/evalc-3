@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const eventEmitter = require('../utils/eventEmitter');
+const {orderPlaced} = require('../utils/eventEmitter');
 const { sendOrderConfirmation } = require('../config/emailConfig');
 
 exports.getOrdersByCustomer = async (req, res) => {
@@ -21,10 +21,10 @@ exports.createOrder = async (req, res) => {
     const [result] = await db.query('INSERT INTO orders (userId, totalAmount) VALUES (?, ?)', [userId, totalAmount]);
     const order = { id: result.insertId, userId, totalAmount, createdAt: new Date() };
 
-    // Emit orderPlaced event
-    eventEmitter.emit('orderPlaced', order);
+    
+    orderPlaced.emit('orderPlaced', order);
 
-    // Send order confirmation email
+   
     sendOrderConfirmation(order,username);
 
     res.status(201).json(order);
